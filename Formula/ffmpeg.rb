@@ -2,7 +2,7 @@ class Ffmpeg < Formula
   desc "Play, record, convert, and stream audio and video"
   homepage "https://ffmpeg.org/"
   url "https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n4.4.tar.gz"
-  version "4.4-with-options" # to distinguish from homebrew-core's ffmpeg
+  version "4.4-with-options-zvbi" # to distinguish from homebrew-core's ffmpeg
   sha256 "bea6d9f91cdbe4c5ad98e0878955ad5077df3883ef321fd4668ee1076de793fe"
   license "GPL-2.0-or-later"
   revision 1
