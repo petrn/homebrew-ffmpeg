@@ -151,7 +151,6 @@ class Ffmpeg < Formula
     args << "--enable-libzimg" if build.with? "zimg"
     args << "--enable-libzmq" if build.with? "zeromq"
     args << "--enable-openssl" if build.with? "openssl"
-    args << "--enable-libzvbi" if build.with? "libzvbi"
 
     # These librares are GPL-incompatible, and require ffmpeg be built with
     # the "--enable-nonfree" flag, which produces unredistributable libraries
@@ -159,6 +158,12 @@ class Ffmpeg < Formula
 
     if build.with? "decklink"
       args << "--enable-decklink"
+      args << "--extra-cflags=-I#{HOMEBREW_PREFIX}/include"
+      args << "--extra-ldflags=-L#{HOMEBREW_PREFIX}/include"
+    end
+
+    if build.with? "libzvbi"
+      args << "--enable-libzvbi"
       args << "--extra-cflags=-I#{HOMEBREW_PREFIX}/include"
       args << "--extra-ldflags=-L#{HOMEBREW_PREFIX}/include"
     end
