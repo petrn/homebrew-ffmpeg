@@ -30,7 +30,7 @@ class Ffmpeg < Formula
   option "with-srt", "Enable SRT library"
   option "with-libvmaf", "Enable libvmaf scoring library"
   option "with-libxml2", "Enable libxml2 library"
-  option "with-libzvbi", "Enable zvbi library"
+  option "with-zvbi", "Enable zvbi library"
 
   depends_on "nasm" => :build
   depends_on "pkg-config" => :build
@@ -151,6 +151,7 @@ class Ffmpeg < Formula
     args << "--enable-libzimg" if build.with? "zimg"
     args << "--enable-libzmq" if build.with? "zeromq"
     args << "--enable-openssl" if build.with? "openssl"
+    args << "--enable-libzvbi" if build.with? "zvbi"
 
     # These librares are GPL-incompatible, and require ffmpeg be built with
     # the "--enable-nonfree" flag, which produces unredistributable libraries
@@ -158,12 +159,6 @@ class Ffmpeg < Formula
 
     if build.with? "decklink"
       args << "--enable-decklink"
-      args << "--extra-cflags=-I#{HOMEBREW_PREFIX}/include"
-      args << "--extra-ldflags=-L#{HOMEBREW_PREFIX}/include"
-    end
-
-    if build.with? "libzvbi"
-      args << "--enable-libzvbi"
       args << "--extra-cflags=-I#{HOMEBREW_PREFIX}/include"
       args << "--extra-ldflags=-L#{HOMEBREW_PREFIX}/include"
     end
