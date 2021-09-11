@@ -5,11 +5,11 @@ class Ffmpeg < Formula
   version "4.4-with-options-zvbi" # to distinguish from homebrew-core's ffmpeg
   sha256 "bea6d9f91cdbe4c5ad98e0878955ad5077df3883ef321fd4668ee1076de793fe"
   license "GPL-2.0-or-later"
-  revision 4
+  revision 5
   head "https://github.com/FFmpeg/FFmpeg.git"
 
-  patch :data
-  
+  patch :DATA
+
   option "with-chromaprint", "Enable the Chromaprint audio fingerprinting library"
   option "with-decklink", "Enable DeckLink support"
   option "with-fdk-aac", "Enable the Fraunhofer FDK AAC library"
