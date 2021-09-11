@@ -5,9 +5,11 @@ class Ffmpeg < Formula
   version "4.4-with-options-zvbi" # to distinguish from homebrew-core's ffmpeg
   sha256 "bea6d9f91cdbe4c5ad98e0878955ad5077df3883ef321fd4668ee1076de793fe"
   license "GPL-2.0-or-later"
-  revision 3
+  revision 4
   head "https://github.com/FFmpeg/FFmpeg.git"
 
+  patch :data
+  
   option "with-chromaprint", "Enable the Chromaprint audio fingerprinting library"
   option "with-decklink", "Enable DeckLink support"
   option "with-fdk-aac", "Enable the Fraunhofer FDK AAC library"
@@ -193,3 +195,27 @@ class Ffmpeg < Formula
     assert_predicate mp4out, :exist?
   end
 end
+
+__END__
+diff --git a/libavdevice/decklink_dec.cpp b/libavdevice/decklink_dec.cpp
+index 79d96cd620..2e4d52957b 100644
+--- a/libavdevice/decklink_dec.cpp
++++ b/libavdevice/decklink_dec.cpp
+@@ -225,7 +225,7 @@ static uint8_t calc_parity_and_line_offset(int line)
+
+ static void fill_data_unit_head(int line, uint8_t *tgt)
+ {
+-    tgt[0] = 0x02; // data_unit_id
++    tgt[0] = 0x03; // data_unit_id
+     tgt[1] = 0x2c; // data_unit_length
+     tgt[2] = calc_parity_and_line_offset(line); // field_parity, line_offset
+     tgt[3] = 0xe4; // framing code
+@@ -1027,7 +1027,7 @@ HRESULT decklink_input_callback::VideoInputFrameArrived(
+                     }
+                 }
+                 vanc->Release();
+-                if (txt_buf - txt_buf0 > 1) {
++                if (cctx->teletext_lines) {
+                     int stuffing_units = (4 - ((45 + txt_buf - txt_buf0) / 46) % 4) % 4;
+                     while (stuffing_units--) {
+                         memset(txt_buf, 0xff, 46);
